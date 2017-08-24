@@ -1,8 +1,8 @@
-/* 
+/*
 * jQuery Flight Indicators plugin
 * By Sébastien Matton (seb_matton@hotmail.com)
 * Published under GPLv3 License.
-* 
+*
 * https://github.com/sebmatton/jQuery-Flight-Indicators
 */
 (function($) {
@@ -10,7 +10,7 @@
 		// Initial configuration
 		var attitude = this;
 		var settings = $.extend({
-			size : 200,
+			size : 250,
 			roll : 0,
 			pitch : 0,
 			turn : 0,
@@ -82,7 +82,7 @@
 		function _setHeading(heading){
 			placeholder.each(function(){
 				$(this).find('div.instrument.heading div.heading').css('transform', 'rotate(' + -heading + 'deg)');
-			});	
+			});
 		}
 
 		function _setTurn(turn){
@@ -97,7 +97,7 @@
 			vario = vario*90;
 			placeholder.each(function(){
 				$(this).find('div.instrument.vario div.vario').css('transform', 'rotate(' + vario + 'deg)');
-			});	
+			});
 		}
 
 		function _setAirSpeed(speed){
@@ -106,7 +106,7 @@
 			speed = 90+speed*2;
 			placeholder.each(function(){
 				$(this).find('div.instrument.airspeed div.speed').css('transform', 'rotate(' + speed + 'deg)');
-			});	
+			});
 		}
 
 		function _setAltitude(altitude){
@@ -115,14 +115,14 @@
 			placeholder.each(function(){
 				$(this).find('div.instrument.altimeter div.needle').css('transform', 'rotate(' + needle + 'deg)');
 				$(this).find('div.instrument.altimeter div.needleSmall').css('transform', 'rotate(' + needleSmall + 'deg)');
-			});	
+			});
 		}
 
 		function _setPressure(pressure){
 			pressure = 2*pressure - 1980;
 			placeholder.each(function(){
 				$(this).find('div.instrument.altimeter div.pressure').css('transform', 'rotate(' + pressure + 'deg)');
-			});	
+			});
 		}
 
 		function _resize(size){

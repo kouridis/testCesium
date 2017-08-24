@@ -1,47 +1,51 @@
-var viewer = new Cesium.Viewer('cesiumContainer');
-
 var terrainProvider = new Cesium.CesiumTerrainProvider({
-url : 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles',
-requestVertexNormals : true
+    url : 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles',
+    requestVertexNormals : true
+});
+
+var viewer = new Cesium.Viewer('cesiumContainer', {
+    homeButton : false,
+    baseLayerPicker : false,
+    terrainProvider : terrainProvider,
+    navigationHelpButton : false
 });
 
 //Enable lighting based on sun/moon positions
-viewer.scene.globe.enableLighting = true;
-
+//viewer.scene.globe.enableLighting = false;
 
 //Enable depth testing so things behind the terrain disappear.
-viewer.scene.globe.depthTestAgainstTerrain = true;
+//viewer.scene.globe.depthTestAgainstTerrain = true;
 
 Cesium.loadJson('https://raw.githubusercontent.com/kouridis/testCesium/master/input.json').then(function(jsonData) {
-    
     //Set bounds of our simulation time
-    var start = Cesium.JulianDate.fromDate(new Date(2012, 8, 4, 10));
-    var stop = Cesium.JulianDate.addSeconds(start, 4391, new Cesium.JulianDate());
+    var start = Cesium.JulianDate.fromDate(new Date(2012, 7, 4, 22, 26, 13));
+    var stop = Cesium.JulianDate.addSeconds(start, 4217, new Cesium.JulianDate());
+
+    //tempStart = jsonData[0]["Timestamp"].split(":");
+    //tempStop =  jsonData[jsonData.length]["Timestamp"].split(":");
 
     //Make sure viewer is at the desired time.
     viewer.clock.startTime = start.clone();
     viewer.clock.stopTime = stop.clone();
     viewer.clock.currentTime = start.clone();
     viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP; //Loop at the end
-    viewer.clock.multiplier = 5;
+    viewer.clock.multiplier = 1;
 
     //Set timeline to simulation bounds
     viewer.timeline.zoomTo(start, stop);
 
     function computeFlight() {
-        console.log('tasos');
+        console.log(jsonData.length);
         var property = new Cesium.SampledPositionProperty();
-        var j = 0;
-        for (var i = 2; i < jsonData.length; i=i+7) {
+        for (var i=0; i < jsonData.length; i++) {
             //console.log('tasos_loop');
-            var time = Cesium.JulianDate.addSeconds(start, j, new Cesium.JulianDate());
-            var one = jsonData[i]["Longitude (Deg)"];
-            var two = jsonData[i]["Latitude (Deg)"];
-            var three = jsonData[i]["Inertial Altitude (ft)"];
+            var time = Cesium.JulianDate.addSeconds(start, i, new Cesium.JulianDate());
+            var one = parseFloat(jsonData[i]["Longitude (Deg)"]);
+            var two =  parseFloat(jsonData[i]["Latitude (Deg)"]);
+            var three = parseFloat(jsonData[i]["Inertial Altitude (ft)"]);
             //console.log(typeof one);
-            var position = Cesium.Cartesian3.fromDegrees(parseFloat(one), parseFloat(two), parseFloat(three));
+            var position = Cesium.Cartesian3.fromDegrees(one, two, three);
             property.addSample(time, position);
-            j++;
         }
         return property;
     }
@@ -66,7 +70,8 @@ Cesium.loadJson('https://raw.githubusercontent.com/kouridis/testCesium/master/in
 
         //Load the Cesium plane model to represent the entity
         model : {
-            uri : '../../SampleData/models/CesiumAir/Cesium_Air.gltf',
+            //uri : '../../SampleData/models/CesiumAir/Cesium_Air.gltf',
+            uri : 'https://raw.githubusercontent.com/AnalyticalGraphicsInc/cesium/master/Apps/SampleData/models/CesiumAir/Cesium_Air.gltf',
             minimumPixelSize : 64
         },
 
@@ -105,10 +110,11 @@ Cesium.loadJson('https://raw.githubusercontent.com/kouridis/testCesium/master/in
         }
         return result;
     }
-    /*
+
+
     viewer.trackedEntity = undefined;
     viewer.zoomTo(viewer.entities, new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-90)));
-    */
+
     //Add button to track the entity as it moves
     Sandcastle.addToolbarButton('View Aircraft', function() {
         var scratch = new Cesium.Matrix4();
@@ -135,6 +141,5 @@ Cesium.loadJson('https://raw.githubusercontent.com/kouridis/testCesium/master/in
     });
 }).otherwise(function(error) {
     // an error occurred
-    console.log('ErrOr');
+    console.log(error);
 });
-

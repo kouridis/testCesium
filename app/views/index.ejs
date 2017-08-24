@@ -3,11 +3,26 @@
 <head>
     <meta charset="utf-8">
     <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/css/flightindicators.css" />
+    <!-- Importing jQuery library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <!-- Importing the FlightIndicators library -->
+    <script src="/js/jquery.flightindicators.js"></script>
 </head>
 <body>
     <h1><%= title %></h1>
     <a href="/cesium">Cesium</a>
     <a href="test.html">CesiumHTML</a>
 
+    <div>
+        <span id="airspeed"></span>
+        <span id="attitude"></span>
+        <span id="altimeter"></span>
+        <span id="turn_coordinator"></span>
+        <span id="heading"></span>
+        <span id="variometer"></span>
+    </div>
+
+    <script src="/gauges.js"></script>
 </body>
 </html>

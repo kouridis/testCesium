@@ -13,7 +13,6 @@
     "cesium": "^1.35.2",
     "fast-csv": "~2.4.0",
     "csv": "~1.1.1",
-    "stream-to-array": "~2.3.0",
     "jquery": "~3.2.1",
     "q": "~1.5.0",
     "csvtojson": "1.1.7"

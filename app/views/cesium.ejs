@@ -2,35 +2,42 @@
 <html lang="en">
 <head>
     <title><%= title %></title>
-    <script src="/Cesium/Cesium.js"></script>
-    <!--
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-
-    Importing the FlightIndicators library
-    <script src="/js/jquery.flightindicators.js"></script>
-    -->
+    <link rel="stylesheet" type="text/css" href="/css/flightindicators.css" />
     <style>
         @import url(/Cesium/Widgets/widgets.css);
         html, body, #cesiumContainer {
             width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+            z-index: -1;
+        }
+        #gaugesContainer {
+          position: relative;
+          margin: 0;
+          padding: 0;
+          z-index: 1;
         }
     </style>
-    <link rel="stylesheet" type="text/css" href="/css/commonCSS.css" media="screen">
-    <!--
-    <link rel="stylesheet" type="text/css" href="/css/flightindicators.css" />
-    -->
+
+    <!-- Importing jQuery library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="/Cesium/Cesium.js"></script>
+    <!-- Importing the FlightIndicators library -->
+    <script src="/js/jquery.flightindicators.js"></script>
 </head>
 <body>
-  <div id="cesiumContainer">
-    <script src="/CesiumApp.js"></script>
-  </div>
-  <!--
-  <span id="attitude"></span>
+    <div id="cesiumContainer">
+      <script src="/jsontest.js"></script>
+    </div>
 
-  <script type="text/javascript">
-      // First static example
-      var first_attitude = $.flightIndicator('#first_attitude', 'attitude', {size:350, roll:8, pitch:3, showBox : true});
-  </script>
-  -->
+    <div id="gaugesContainer">
+        <span id="airspeed"></span>
+        <span id="attitude"></span>
+        <span id="altimeter"></span>
+        <span id="turn_coordinator"></span>
+        <span id="heading"></span>
+        <span id="variometer"></span>
+
+        <script src="/gauges.js"></script>
+    </div>
 </body>
+
 </html>
